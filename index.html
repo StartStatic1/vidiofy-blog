@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vidiofy – Tecnologia, Reviews e Tutoriais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --border: #E8E4DC;
+    --text: #1A1916;
+    --muted: #6B6860;
+    --accent: #C0392B;
+    --accent2: #2980B9;
+    --tag-bg: #F0EDE8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* HEADER */
+  header { background: var(--surface); border-bottom: 2px solid var(--text); }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+  .topbar a { color: var(--muted); text-decoration: none; }
+  .logo-row { display: flex; align-items: center; justify-content: space-between; padding: 20px 0 16px; }
+  .logo { font-family: 'Playfair Display', serif; font-size: 42px; letter-spacing: -1px; text-decoration: none; color: var(--text); }
+  .logo span { color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  nav { display: flex; gap: 2px; padding: 0 0 12px; overflow-x: auto; }
+  nav a { font-size: 13px; font-weight: 600; padding: 6px 14px; text-decoration: none; color: var(--text); letter-spacing: .5px; white-space: nowrap; border-radius: 2px; transition: background .15s; }
+  nav a:hover, nav a.active { background: var(--text); color: #fff; }
+
+  /* HERO / FEATURED */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .hero { display: grid; grid-template-columns: 1fr 340px; gap: 32px; padding: 40px 0 32px; border-bottom: 1px solid var(--border); }
+  .hero-main h2 { font-family: 'Playfair Display', serif; font-size: 38px; line-height: 1.15; margin: 12px 0 16px; }
+  .hero-main p { font-family: 'Source Serif 4', serif; font-size: 17px; color: var(--muted); line-height: 1.7; }
+  .hero-img { background: #D0CCC4; border-radius: 4px; aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-img svg { opacity: .3; }
+  .category-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .read-more { display: inline-block; margin-top: 20px; padding: 10px 22px; background: var(--text); color: #fff; text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 2px; letter-spacing: .5px; }
+
+  /* SIDEBAR HEADLINES */
+  .hero-side { display: flex; flex-direction: column; gap: 20px; }
+  .side-item { padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .side-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .side-item .category-badge { margin-bottom: 4px; }
+  .side-item h3 { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.3; }
+  .side-item h3 a { text-decoration: none; color: var(--text); }
+  .side-item h3 a:hover { color: var(--accent); }
+  .meta { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* SECTION LAYOUT */
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: transform .15s, box-shadow .15s; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  .card-img { aspect-ratio: 16/9; background: #D8D4CC; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .card-img svg { opacity: .25; }
+  .card-body { padding: 16px; }
+  .card-body .category-badge { font-size: 10px; }
+  .card-body h3 { font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.35; margin: 6px 0 8px; }
+  .card-body h3 a { text-decoration: none; color: var(--text); }
+  .card-body h3 a:hover { color: var(--accent); }
+  .card-body p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* DOIS COLUNAS */
+  .two-col { display: grid; grid-template-columns: 1fr 300px; gap: 40px; padding: 36px 0; }
+  .posts-list { display: flex; flex-direction: column; gap: 28px; }
+  .post-item { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: start; }
+  .post-thumb { aspect-ratio: 4/3; background: #D8D4CC; border-radius: 3px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+  .post-thumb svg { opacity: .25; }
+  .post-info .category-badge { font-size: 10px; }
+  .post-info h3 { font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.3; margin: 4px 0 6px; }
+  .post-info h3 a { text-decoration: none; color: var(--text); }
+  .post-info h3 a:hover { color: var(--accent); }
+  .post-info p { font-size: 12.5px; color: var(--muted); }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 28px; }
+  .widget { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 20px; }
+  .widget-title { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+  /* AUTOR */
+  .author-widget { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+  .author-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); }
+  .author-name { font-family: 'Playfair Display', serif; font-size: 17px; }
+  .author-bio { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .author-social { display: flex; gap: 10px; justify-content: center; }
+  .author-social a { font-size: 12px; color: var(--muted); text-decoration: none; background: var(--tag-bg); padding: 4px 10px; border-radius: 12px; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 12px; padding: 4px 10px; background: var(--tag-bg); border-radius: 2px; text-decoration: none; color: var(--text); }
+  .tag:hover { background: var(--text); color: #fff; }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--text); color: #fff; padding: 40px 20px; text-align: center; }
+  .newsletter h2 { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 8px; }
+  .newsletter p { font-size: 14px; opacity: .75; margin-bottom: 20px; }
+  .nl-form { display: flex; gap: 8px; max-width: 440px; margin: 0 auto; }
+  .nl-form input { flex: 1; padding: 11px 16px; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1); color: #fff; font-size: 14px; border-radius: 2px; }
+  .nl-form input::placeholder { color: rgba(255,255,255,.5); }
+  .nl-form button { padding: 11px 22px; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px; border: none; border-radius: 2px; cursor: pointer; }
+
+  /* FOOTER */
+  footer { background: #111; color: rgba(255,255,255,.55); font-size: 12px; padding: 32px 20px; text-align: center; line-height: 2; }
+  footer a { color: rgba(255,255,255,.7); text-decoration: none; margin: 0 8px; }
+  footer a:hover { color: #fff; }
+  .footer-links { margin-bottom: 10px; }
+
+  /* RATING STARS */
+  .stars { color: #F39C12; font-size: 14px; }
+
+  @media (max-width: 768px) {
+    .hero, .two-col { grid-template-columns: 1fr; }
+    .hero-side { display: none; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .logo { font-size: 30px; }
+  }
+  @media (max-width: 480px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="topbar">
+      <span>Segunda-feira, 8 de junho de 2026</span>
+      <div><a href="#">Contato</a> &bull; <a href="#">Anuncie</a> &bull; <a href="#">RSS</a></div>
+    </div>
+    <div class="logo-row">
+      <div>
+        <a class="logo" href="#">Vidiofy<span>.</span></a>
+        <div class="tagline">Tecnologia · Reviews · Tutoriais</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#" class="active">Início</a>
+      <a href="#">Celulares</a>
+      <a href="#">TVs & Áudio</a>
+      <a href="#">Tutoriais</a>
+      <a href="#">Reviews</a>
+      <a href="#">Onde Comprar</a>
+      <a href="#">Comparativos</a>
+      <a href="#">Notícias</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <div class="hero-main">
+      <span class="category-badge">REVIEW</span>
+      <h2>Samsung Galaxy S25 Ultra: Valeu a Pena Atualizar em 2026?</h2>
+      <p>Testamos o flagship da Samsung durante 30 dias. A câmera de 200MP entrega fotos incríveis mesmo à noite, a bateria dura o dia todo e o S Pen ganhou IA — mas o preço ainda dói no bolso.</p>
+      <a class="read-more" href="#">Leia o Review Completo →</a>
+    </div>
+    <div class="hero-side">
+      <div class="side-item">
+        <span class="category-badge">CELULARES</span>
+        <h3><a href="#">Motorola Moto G85 5G: o Custo-Benefício Campeão de 2026</a></h3>
+        <div class="meta">5 jun 2026 · 6 min de leitura</div>
+      </div>
+      <div class="side-item">
+        <span class="category-badge">TUTORIAL</span>
+        <h3><a href="#">Como usar a IA do Android 16 para organizar fotos automaticamente</a></h3>
+        <div class="meta">4 jun 2026 · 4 min de leitura</div>
+      </div>
+      <div class="side-item">
+        <span class="category-badge">TVS</span>
+        <h3><a href="#">LG OLED C5 vs Samsung QLED Q90D: qual tela comprar em 2026?</a></h3>
+        <div class="meta">3 jun 2026 · 8 min de leitura</div>
+      </div>
+      <div class="side-item">
+        <span class="category-badge">ONDE COMPRAR</span>
+        <h3><a href="#">iPhone 16 no Brasil: melhor preço no mês de junho</a></h3>
+        <div class="meta">1 jun 2026 · 2 min de leitura</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARDS: REVIEWS RECENTES -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">Reviews Recentes</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="category-badge">TVS</span>
+          <h3><a href="#">Sony Bravia 9 Mini LED — Imagem Impecável para Cinema em Casa</a></h3>
+          <p>Testamos o processador XR e o sistema de iluminação local com 1.000+ zonas. Resultado? Preto profundo e brilho de 2.000 nits.</p>
+          <div class="meta stars">★★★★★ <span style="color:var(--muted)">· 8 jun · 10 min</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="category-badge">CELULARES</span>
+          <h3><a href="#">Xiaomi 15 Pro: Potência Máxima com Snapdragon 8 Elite por Menos</a></h3>
+          <p>Carregamento de 120W, câmera Leica e tela LTPO 144Hz. Vale mais que qualquer flagship brasileiro em termos de custo-benefício.</p>
+          <div class="meta stars">★★★★<span style="color:var(--border)">★</span> <span style="color:var(--muted)">· 7 jun · 7 min</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1Z"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="category-badge">ÁUDIO</span>
+          <h3><a href="#">Fones JBL Live Pro 2 — Cancelamento de Ruído que Surpreende</a></h3>
+          <p>JBL entregou cancelamento ativo de nível premium sem cobrar preço de Sony ou Bose. Ideal para trabalho e viagens longas.</p>
+          <div class="meta stars">★★★★<span style="color:var(--border)">★</span> <span style="color:var(--muted)">· 6 jun · 5 min</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TUTORIAIS + SIDEBAR -->
+<div class="container">
+  <div class="two-col">
+    <!-- LISTA DE POSTS -->
+    <main>
+      <div class="section-title" style="margin-bottom:24px">Tutoriais em Destaque</div>
+      <div class="posts-list">
+        <div class="post-item">
+          <div class="post-thumb">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z"/></svg>
+          </div>
+          <div class="post-info">
+            <span class="category-badge">TUTORIAL</span>
+            <h3><a href="#">Como instalar APK no Android sem Google Play em 5 passos simples</a></h3>
+            <p>Guia completo para habilitar fontes desconhecidas, baixar APKs confiáveis e instalar com segurança em qualquer versão do Android.</p>
+            <div class="meta">5 jun 2026 · 5 min de leitura</div>
+          </div>
+        </div>
+        <div class="post-item">
+          <div class="post-thumb">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="post-info">
+            <span class="category-badge">TUTORIAL</span>
+            <h3><a href="#">Calibrando a tela da sua TV: configurações que fazem diferença real</a></h3>
+            <p>Modo de filme, temperatura de cor, backlight ideal — aprenda a deixar qualquer TV com imagem de cinema sem gastar nada.</p>
+            <div class="meta">4 jun 2026 · 7 min de leitura</div>
+          </div>
+        </div>
+        <div class="post-item">
+          <div class="post-thumb">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1"/></svg>
+          </div>
+          <div class="post-info">
+            <span class="category-badge">TUTORIAL</span>
+            <h3><a href="#">Recuperar fotos apagadas do celular Android — 3 métodos que funcionam</a></h3>
+            <p>Desde o Google Fotos até apps de recuperação, cobrimos todos os cenários com prints de cada etapa.</p>
+            <div class="meta">3 jun 2026 · 6 min de leitura</div>
+          </div>
+        </div>
+        <div class="post-item">
+          <div class="post-thumb">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          </div>
+          <div class="post-info">
+            <span class="category-badge">ONDE COMPRAR</span>
+            <h3><a href="#">Melhores sites para comprar eletrônico importado com segurança em 2026</a></h3>
+            <p>AliExpress, Shopee, Amazon US — comparamos taxas, prazos e confiabilidade para você decidir melhor onde gastar.</p>
+            <div class="meta">2 jun 2026 · 8 min de leitura</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- AUTOR -->
+      <div class="widget">
+        <div class="widget-title">Sobre o Autor</div>
+        <div class="author-widget">
+          <img class="author-photo" src="data:image/jpeg;base64,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" alt="Autor do Vidiofy">
+          <div class="author-name">Vidiofy Admin</div>
+          <div class="author-bio">Especialista em tecnologia de consumo. Testando gadgets, celulares e TVs desde 2019 para ajudar você a escolher melhor.</div>
+          <div class="author-social">
+            <a href="#">YouTube</a>
+            <a href="#">Telegram</a>
+            <a href="#">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIS LIDOS -->
+      <div class="widget">
+        <div class="widget-title">Mais Lidos da Semana</div>
+        <ol style="padding-left:16px;display:flex;flex-direction:column;gap:10px">
+          <li><a href="#" style="text-decoration:none;color:var(--text);font-size:13px;font-weight:500;line-height:1.4">Samsung Galaxy A55 vs Motorola Edge 50: qual vale mais?</a></li>
+          <li><a href="#" style="text-decoration:none;color:var(--text);font-size:13px;font-weight:500;line-height:1.4">Como tirar foto profissional com celular intermediário</a></li>
+          <li><a href="#" style="text-decoration:none;color:var(--text);font-size:13px;font-weight:500;line-height:1.4">5 configurações do Wi-Fi que deixam a internet mais rápida</a></li>
+          <li><a href="#" style="text-decoration:none;color:var(--text);font-size:13px;font-weight:500;line-height:1.4">Melhor TV custo-benefício abaixo de R.000 em 2026</a></li>
+          <li><a href="#" style="text-decoration:none;color:var(--text);font-size:13px;font-weight:500;line-height:1.4">iPhone 16 ou Samsung S25? Comparativo definitivo</a></li>
+        </ol>
+      </div>
+
+      <!-- TAGS -->
+      <div class="widget">
+        <div class="widget-title">Tópicos</div>
+        <div class="tags">
+          <a href="#" class="tag">Samsung</a>
+          <a href="#" class="tag">iPhone</a>
+          <a href="#" class="tag">Xiaomi</a>
+          <a href="#" class="tag">Motorola</a>
+          <a href="#" class="tag">Android</a>
+          <a href="#" class="tag">TV 4K</a>
+          <a href="#" class="tag">OLED</a>
+          <a href="#" class="tag">Fones</a>
+          <a href="#" class="tag">5G</a>
+          <a href="#" class="tag">Tutorial</a>
+          <a href="#" class="tag">Importado</a>
+          <a href="#" class="tag">Review</a>
+          <a href="#" class="tag">Snapdragon</a>
+          <a href="#" class="tag">Câmera</a>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>Receba Reviews antes de Todos</h2>
+  <p>Mais de 12.000 leitores já recebem nossos reviews direto no e-mail. Sem spam.</p>
+  <div class="nl-form">
+    <input type="email" placeholder="seu@email.com">
+    <button>Quero Receber</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#">Início</a>
+    <a href="#">Sobre</a>
+    <a href="#">Contato</a>
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Termos de Uso</a>
+    <a href="#">Anuncie Aqui</a>
+    <a href="#">Sitemap</a>
+  </div>
+  <div>© 2026 Vidiofy.com.br — Tecnologia, Reviews e Tutoriais</div>
+  <div style="margin-top:8px;font-size:11px;opacity:.5">
+    Links patrocinados podem gerar comissão sem custo para o leitor.
+    Conteúdo informativo, sem vínculo com fabricantes.
+  </div>
+</footer>
+
+</body>
+</html>
